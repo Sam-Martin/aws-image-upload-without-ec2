@@ -1,0 +1,72 @@
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.36.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="css/jquery.fileupload.css">
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="js/jquery.fileupload.js"></script>
+<script>
+var uploadURL;
+$(document).ready(function(){
+	console.log("ready");
+	// Initialize the Amazon Cognito credentials provider
+	AWS.config.region = 'eu-west-1';
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+		AccountId: '080863329876',
+		RoleArn: 'arn:aws:iam::080863329876:role/Cognito_image_uploadUnauth_Role',
+	    IdentityPoolId: 'eu-west-1:32144379-438f-471c-a403-09d5920fbffb',
+	})
+	
+
+	//var form =;
+	fileSelect = $('#file-select');
+	uploadButton = $('#upload-button');
+    uploadForm = $('#file-form')
+
+    uploadButton.click(function(ev){
+        $this = $(this);
+        data = $this.data();
+        console.log(data)
+        
+    })
+
+	//var s3 = new AWS.S3();
+	
+
+	fileSelect.fileupload({
+            autoUpload: false,
+            type: 'POST',
+            datatype: 'xml',
+            add: function(e,data){
+                console.log('adding file')
+                console.log(data)
+                $.getJSON('https://l4ur9byy57.execute-api.eu-west-1.amazonaws.com/test/getsigneds3uploadurl', {contentType: data.files[0].type}, function(result){
+                        console.log("uploading to "+result.url)
+                        if(!result.errorMessage){
+                            console.log(result.url)
+                            data.url = result.url
+                            
+                            data.submit();
+                        }else{
+                                console.log(result.errorMessage)
+                        }
+                        
+                })
+            },
+            
+        });
+	  
+
+	    
+	    
+})
+
+
+
+</script>
+
+  <input type="file" type="file" name="files[]" multiple id="file-select">
+  <button type="button" id="upload-button">Upload</button>
