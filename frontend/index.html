@@ -15,27 +15,36 @@ form.onsubmit = function(event) {
 
   // Update button text.
   uploadButton.innerHTML = 'Uploading...';
-
+    if(typeof(fileSelect.files[0].type) == 'undefined'){
+        alert("No content type associated with this file, are you sure it's a valid image?")
+        return;
+    }
     
     console.log(fileSelect.files[0])
     $.post('https://l4ur9byy57.execute-api.eu-west-1.amazonaws.com/test/getsigneds3uploadurl', JSON.stringify({contentType: fileSelect.files[0].type}), function(result){
-            console.log("uploading to "+result.url)
+
             if(!result.errorMessage){
-                console.log(result.url)
- 
+
+                console.log("uploading to "+result.oneTimeUploadUrl)
+                destinationURL = result.resultUrl
                 
                 // Upload
                 $.ajax({
-                    url: result.url,
+                    url: result.oneTimeUploadUrl,
                     type: "PUT",
                     data: fileSelect.files[0],
                     processData: false,
-                    contentType: false
+                    contentType: false,
+                    success: function(result){
 
+                        console.log(result)
+                        uploadButton.innerHTML = "Upload";
+                        $('body').append('<img src="'+destinationURL+'"/>')
+                    }
                 })
 
             }else{
-                    console.log(result.errorMessage)
+                    alert(result.errorMessage)
             }
             
     },'json')
