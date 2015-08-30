@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "0.11"
+install:
+ - npm install jshint -g
+ - npm install PrettyCSS -g
+script:
+ - jshint lambda\*.js
+ - jshint frontend\js\*.js
+ - prettycss frontend\css\*.css

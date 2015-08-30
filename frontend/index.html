@@ -3,6 +3,8 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+<link rel="stylesheet" href="css/amazon-image-upload-test.css">
+
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
@@ -35,19 +37,21 @@ $(document).ready(function(){
         
         limitConcurrentUploads:1,
         add: function(e, data){
-            // Loop through each file we're uploading
-            $.each(data.files,function(key,value){
-                console.log(value.name)
-            })
 
-            $.post('https://l4ur9byy57.execute-api.eu-west-1.amazonaws.com/test/getsigneds3uploadurl', JSON.stringify({contentType: data.files[0].type}), function(result){
+            // Get the signed URL from Lambda
+            $.post(
+                'https://l4ur9byy57.execute-api.eu-west-1.amazonaws.com/test/getsigneds3uploadurl', 
+                JSON.stringify({contentType: data.files[0].type}), 
+                function(result){
 
                     if(!result.errorMessage){
 
-                        console.log("uploading to "+result.oneTimeUploadUrl)
+
                         data.url = result.oneTimeUploadUrl
                         data.contentType = data.files[0].type
                         data.resultUrl = result.resultUrl
+
+                        // Upload the file to the new signed URL
                         data.submit()
                     }else{
                             alert(result.errorMessage)
