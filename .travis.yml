@@ -5,6 +5,6 @@ install:
  - npm install jshint -g
  - npm install PrettyCSS -g
 script:
- - jshint lambda\*.js
- - jshint frontend\js\*.js
- - prettycss frontend\css\*.css
+ - jshint lambda/*.js
+ - jshint frontend/js/*.js
+ - prettycss frontend/css/*.css
