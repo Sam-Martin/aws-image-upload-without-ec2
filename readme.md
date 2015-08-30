@@ -21,8 +21,8 @@ The execution workflow is extremely simple. From loading the page in the browser
 
 ## Future and Alternatives
 After whipping up this example I discovered it was actually possible to do this using signed url *policies* (I didn't previously appreciate that the signature validated the policy).  
-This removes the need to involve either Lambda or the API Gateway ([more info here](https://aws.amazon.com/articles/1434)).  
-However, this was still a useful learning experience, and with this methodology you are able to maintain control over the key name, which you aren't with the above example.  
+This removes the need to involve either Lambda or the API Gateway ([more info here](https://aws.amazon.com/articles/1434), [JS example here](http://stackoverflow.com/questions/11240127/uploading-image-to-amazon-s3-with-html-javascript-jquery-with-ajax-request-n/12378395#12378395)), and actually provides [more functionality](http://stackoverflow.com/questions/29550537/how-to-set-content-length-range-for-s3-browser-upload-via-boto).  
+However, this was still a useful learning experience, and with this methodology you are able to maintain control over the key name, which you aren't with the above example. (Though admittedly not being able to control the max upload size server side is a pretty big downside!)  
 I also want to add in support for user authentication at some point using [Amazon Cognito](https://aws.amazon.com/cognito/) which will make better use of the API Gateway and Lambda services.
 
 ## Plugins & Frameworks
