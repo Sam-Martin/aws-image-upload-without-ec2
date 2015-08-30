@@ -1,5 +1,19 @@
 
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="js/jquery.fileupload.js"></script>
 <script>
 var uploadURL;
 $(document).ready(function(){
@@ -7,57 +21,61 @@ $(document).ready(function(){
     
 
     var form = document.getElementById('file-form');
-var fileSelect = document.getElementById('file-select');
-var uploadButton = document.getElementById('upload-button');
+    var fileSelect = document.getElementById('file-select');
+    var uploadButton = document.getElementById('upload-button');
 
-form.onsubmit = function(event) {
-  event.preventDefault();
+    $(form).fileupload({
+        autoUpload:false,
+        type: 'PUT',
+        multipart: false,
+        beforeSend: function(xhr, data) {
+            // Necessary to prevent filename and attachment being set (which forces the file to be downloaded when clicked on)
+            xhr.setRequestHeader("Content-Disposition", "");
+        },
+        
+        limitConcurrentUploads:1,
+        add: function(e, data){
+            // Loop through each file we're uploading
+            $.each(data.files,function(key,value){
+                console.log(value.name)
+            })
 
-  // Update button text.
-  uploadButton.innerHTML = 'Uploading...';
-    if(typeof(fileSelect.files[0].type) == 'undefined'){
-        alert("No content type associated with this file, are you sure it's a valid image?")
-        return;
-    }
-    
-    console.log(fileSelect.files[0])
-    $.post('https://l4ur9byy57.execute-api.eu-west-1.amazonaws.com/test/getsigneds3uploadurl', JSON.stringify({contentType: fileSelect.files[0].type}), function(result){
+            $.post('https://l4ur9byy57.execute-api.eu-west-1.amazonaws.com/test/getsigneds3uploadurl', JSON.stringify({contentType: data.files[0].type}), function(result){
 
-            if(!result.errorMessage){
+                    if(!result.errorMessage){
 
-                console.log("uploading to "+result.oneTimeUploadUrl)
-                destinationURL = result.resultUrl
-                
-                // Upload
-                $.ajax({
-                    url: result.oneTimeUploadUrl,
-                    type: "PUT",
-                    data: fileSelect.files[0],
-                    processData: false,
-                    contentType: false,
-                    success: function(result){
-
-                        console.log(result)
-                        uploadButton.innerHTML = "Upload";
-                        $('body').append('<img src="'+destinationURL+'"/>')
+                        console.log("uploading to "+result.oneTimeUploadUrl)
+                        data.url = result.oneTimeUploadUrl
+                        data.contentType = data.files[0].type
+                        data.resultUrl = result.resultUrl
+                        data.submit()
+                    }else{
+                            alert(result.errorMessage)
                     }
-                })
-
-            }else{
-                    alert(result.errorMessage)
-            }
+                    
+            },'json')
             
-    },'json')
+        },
+       progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        },
+        done: function (e, data) {
+            $('#output').html('<img src="'+data.resultUrl+'" class="preview"/>')
+        }
+    });
 
-      
-  
-}
 })
 
-
-
 </script>
-<form id="file-form" action="handler.php" method="POST">
-  <input type="file" id="file-select" name="photos[]" multiple/>
-  <button type="submit" id="upload-button">Upload</button>
+<h1> Image Upload</h1>
+<form id="file-form" method="PUT">
+  <input type="file" id="file-select" name="photos[]"/>
 </form>
+<div id="progress">
+    <div class="bar progress-bar" style="width: 0%;"></div>
+</div>
+<div id="output"></div>
