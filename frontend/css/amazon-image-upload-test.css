@@ -3,6 +3,45 @@
 	width:20em;
 }
 .preview{
-	width:20em;
-	max-height: 20em;
+	max-width:40em;
+	max-height:20em;
+
+}
+.navbar-header > h3{
+	color: white;
+}
+.jumbotron{
+	margin-top: 20px;
+}
+#output {
+	height:20em;
+	width:40em;
+	white-space: nowrap;
+}
+#output-url{
+	width:60em;
+	display: none;
+}
+
+#output-helper{
+	display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
 }

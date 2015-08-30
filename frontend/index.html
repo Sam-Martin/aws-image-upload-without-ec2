@@ -1,31 +1,52 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/amazon-image-upload-test.css">
 
-<link rel="stylesheet" href="css/amazon-image-upload-test.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+        <script src="js/vendor/jquery.ui.widget.js"></script>
+        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+        <script src="js/vendor/jquery.iframe-transport.js"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="js/vendor/jquery.fileupload.js"></script>
+        <!-- The main JS for bringing it all together on this page -->
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header"><h3>AWS Image Uploads Without EC2</h3></div>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="container text-center">
+                <div id="output" class="center-block">
+                    <span id="output-helper"></span>
+                    <img src="http://placehold.it/300x300" class="img-circle"/>
+                </div>
+                <h1>Image Upload</h1>
+            </div>
+        </div>
+        <div class="container">
+            <form id="file-form" method="PUT">
+            <span class="fileinput-button btn btn-success ">
+                <span>Select file</span>
+                <input type="file" id="file-select" name="photos[]"/>
+            </span>
+            </form>
+            <div id="progress">
+                <div class="bar progress-bar" style="width: 0%;"></div>
+            </div>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-<script src="js/vendor/jquery.ui.widget.js"></script>
-<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-<script src="js/vendor/jquery.iframe-transport.js"></script>
-<!-- The basic File Upload plugin -->
-<script src="js/vendor/jquery.fileupload.js"></script>
-<!-- The main JS for bringing it all together on this page -->
-<script src="js/main.js"><script>
-
-
-</script>
-<h1> Image Upload</h1>
-<form id="file-form" method="PUT">
-  <input type="file" id="file-select" name="photos[]"/>
-</form>
-<div id="progress">
-    <div class="bar progress-bar" style="width: 0%;"></div>
-</div>
-<div id="output"></div>
+            <input type="text" name="output-url" id="output-url" class="form-control"/>
+        </div>
+    </body>
+</head>

@@ -30,7 +30,10 @@ $(document).ready(function () {
       $('#progress .bar').css('width', progress + '%');
     },
     done: function (e, data) {
-      $('#output').html('<img src="' + data.resultUrl + '" class="preview"/>');
+        // Show preview
+        $('#output img').replaceWith('<img src="' + data.resultUrl + '" class="preview"/>');
+        // Output URL
+        $('#output-url').css('display','block').attr('value',data.resultUrl)
     }
   });
 });
