@@ -1,8 +1,8 @@
 #progress{
-	height:10px;
-	width:200px;
+	height:1em;
+	width:20em;
 }
 .preview{
-	width:200px;
-	max-height: 200px;
+	width:20em;
+	max-height: 20em;
 }
