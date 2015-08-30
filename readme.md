@@ -19,6 +19,12 @@ The execution workflow is extremely simple. From loading the page in the browser
 5. Node.js uses the inbuilt AWS SDK to `getSignedUrl` and returns it in its `context.done`  
 6. This url is returned to the client-side JS via API Gateway and is then used to upload a file using [BlueImp's jQuery File Upload](https://github.com/blueimp/jQuery-File-Upload)  
 
+## Future and Alternatives
+After whipping up this example I discovered it was actually possible to do this using signed url *policies* (I didn't previously appreciate that the signature validated the policy).  
+This removes the need to involve either Lambda or the API Gateway ([more info here](https://aws.amazon.com/articles/1434)).  
+However, this was still a useful learning experience, and with this methodology you are able to maintain control over the key name, which you aren't with the above example.  
+I also want to add in support for user authentication at some point using [Amazon Cognito](https://aws.amazon.com/cognito/) which will make better use of the API Gateway and Lambda services.
+
 ## Plugins & Frameworks
 * [BlueImp's jQuery File Upload](https://github.com/blueimp/jQuery-File-Upload) for uploading
 * [Twitter BootStrap](http://getbootstrap.com/) for styling
