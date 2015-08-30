@@ -1,7 +1,8 @@
 # AWS Image Upload Without EC2 Example  
  [![GitHub license](https://img.shields.io/github/license/Sam-Martin/servicenow-powershell.svg)](LICENSE) [![Build Status](https://travis-ci.org/X0nic/chef-snapraid.svg)](https://travis-ci.org/sam-martin/aws-image-upload-without-ec2)  
-This repository contains the Node.js, HTML, JavaScript, and supporting jQuery plugins to upload images securely to S3 using [Amazon API Gateway](https://aws.amazon.com/api-gateway/) and [AWS Lambda](https://aws.amazon.com/lambda/) to generate a [signed upload url](http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html).
-
+This repository contains the Node.js, HTML, JavaScript, and supporting jQuery plugins to upload images securely to S3 using [Amazon API Gateway](https://aws.amazon.com/api-gateway/) and [AWS Lambda](https://aws.amazon.com/lambda/) to generate a [signed upload url](http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html).  
+## Demo
+You can find a demo online at [ImageUpload.SamMart.in](http://imageupload.sammart.in/) (images are deleted automatically almost immediately).
 ## Overview
 This example project is simply an exercise for me (Sam Martin) to dabble in:
 
@@ -44,7 +45,8 @@ ToDo
                 "s3:PutObject"
             ],
             "Resource": [
-                "arn:aws:s3:::image-upload-smartin"
+                "arn:aws:s3:::image-upload-smartin",
+                "arn:aws:s3:::image-upload-smartin/*"
             ]
         }
     ]
