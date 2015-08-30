@@ -4,17 +4,19 @@ This repository contains the Node.js, HTML, JavaScript, and supporting jQuery pl
 
 ## Overview
 This example project is simply an exercise for me (Sam Martin) to dabble in:
-1) AWS Lambda
-2) Amazon API Gateway
-3) Basic CSS, JS, and HTML linting with [Travis CI](https://travis-ci.org/)  
 
-The execution workflow is extremely simple. From loading the page in the browser:
-1) User selects a file to upload
-2) JavaScript calls out to the API Gateway endpoint using jQuery's `$.post` to retrieve a signed upload URL
-3) API Gateway calls the Lambda Node.js script
-4) Node.js script assumes the IAM role associated with it which has permission to upload an object to the s3 bucket
-5) Node.js uses the inbuilt AWS SDK to `getSignedUrl` and returns it in its `context.done`
-6) This url is returned to the client-side JS via API Gateway and is then used to upload a file using [BlueImp's jQuery File Upload](https://github.com/blueimp/jQuery-File-Upload)
+1. AWS Lambda  
+2. Amazon API Gateway  
+3. Basic CSS, JS, and HTML linting with [Travis CI](https://travis-ci.org/)    
+
+The execution workflow is extremely simple. From loading the page in the browser: 
+
+1. User selects a file to upload 
+2. JavaScript calls out to the API Gateway endpoint using jQuery's `$.post` to retrieve a signed upload URL  
+3. API Gateway calls the Lambda Node.js script  
+4. Node.js script assumes the IAM role associated with it which has permission to upload an object to the s3 bucket  
+5. Node.js uses the inbuilt AWS SDK to `getSignedUrl` and returns it in its `context.done`  
+6. This url is returned to the client-side JS via API Gateway and is then used to upload a file using [BlueImp's jQuery File Upload](https://github.com/blueimp/jQuery-File-Upload)  
 
 ## Plugins & Frameworks
 * [BlueImp's jQuery File Upload](https://github.com/blueimp/jQuery-File-Upload) for uploading
@@ -67,16 +69,16 @@ ToDo
 ### S3 Bucket Policy
 ```
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "PublicReadGetObject",
-			"Effect": "Allow",
-			"Principal": "*",
-			"Action": "s3:GetObject",
-			"Resource": "arn:aws:s3:::image-upload-smartin/*"
-		}
-	]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::image-upload-smartin/*"
+        }
+    ]
 }
 ```
 ## Author
